@@ -11,6 +11,7 @@ dask
 editdistance
 elasticsearch
 fastparquet
+imageio
 keras
 lxml
 matplotlib
