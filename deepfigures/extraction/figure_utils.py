@@ -12,7 +12,7 @@ from deepfigures.extraction.renderers import PDFRenderer
 from deepfigures.extraction.exceptions import LatexException
 from deepfigures.extraction.datamodels import (BoxClass, Figure)
 from deepfigures.settings import DEFAULT_INFERENCE_DPI
-
+from scipy.optimize import linear_sum_assignment
 
 def call_pdflatex(
     src_tex: str, src_dir: str, dest_dir: str, timeout: int=1200
@@ -74,7 +74,7 @@ def pair_boxes(a_boxes: List[BoxClass],
         for (b_idx, b_box) in enumerate(b_boxes):
             cost_matrix[a_idx, b_idx] = a_box.distance_to_other(b_box)
     assert (cost_matrix != np.nan).all()
-    (a_indices, b_indices) = sp.optimize.linear_sum_assignment(cost_matrix)
+    (a_indices, b_indices) = linear_sum_assignment(cost_matrix)
     assert len(a_indices) == len(b_indices)
     return a_indices, b_indices
 
